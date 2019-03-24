@@ -21,10 +21,9 @@ client categories. "inspect it for a list of categories"
 
 client randomByCategory: #dev. "inspect it for a random fact by category"
 
-client  search: 'brazil'. 
-"or" 
-client  search: 'argentina'. "inspect it for a list of facts"
+client  search: 'brazil' "inspect it for a list of facts"
 ```
+
 ## Morph for random facts.
 There is a simple morph to show random facts. Execute:
 
