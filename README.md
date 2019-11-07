@@ -29,4 +29,6 @@ client  search: 'brazil' "inspect it for a list of facts"
 ## Morph for random facts.
 There is a simple morph to show random facts. Execute:
 
-```ChuckNorrisMorph  open ```
+```Smalltalk
+ChuckNorrisMorph  open 
+```
