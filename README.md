@@ -7,11 +7,13 @@ This project is a client for [Chuck Norris Api](https://api.chucknorris.io/) wri
 ## Running
 After cloning this repository, open a workspace in Cuis and type:
 
-``` Feature require: #'ChuckNorrisTalk'. ```
+```Smalltalk 
+Feature require: #'ChuckNorrisTalk'. 
+```
 
 And then:
 
-```
+```Smalltalk
 |client|
 client := ChuckNorrisIoClient  new.
 
