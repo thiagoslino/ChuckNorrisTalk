@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4365] on 31 August 2020 at 2:58:22 pm'!
-'Description api changed'!
-!provides: 'ChuckNorrisTalk' 1 16!
+'From Cuis 5.0 [latest update: #4365] on 31 August 2020 at 3:25:39 pm'!
+'Description print fact'!
+!provides: 'ChuckNorrisTalk' 1 17!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
 SystemOrganization addCategory: #ChuckNorrisTalk!
@@ -45,6 +45,13 @@ I am a Chuck Norris joke (ok, fact)!
 
 !ChuckNorrisIoClient commentStamp: '<historical>' prior: 0!
 I am a client for chucknorris.io,  a free JSON API for hand curated Chuck Norris facts. https://api.chucknorris.io/!
+
+!ChuckNorrisFact methodsFor: 'printing' stamp: 'tsl 8/31/2020 15:23:38'!
+printOn: aStream
+	super printOn: aStream.
+	aStream nextPut: $(;
+		nextPutAll: self value;
+		nextPut: $)! !
 
 !ChuckNorrisMorph methodsFor: 'initialization' stamp: 'tsl 8/31/2020 14:51:45'!
 initialize
