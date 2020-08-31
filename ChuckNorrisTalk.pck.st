@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3610] on 24 March 2019 at 12:58:41 pm'!
-'Description error handling'!
-!provides: 'ChuckNorrisTalk' 1 13!
-!requires: 'Graphics-Files-Additional' 1 22 nil!
-!requires: 'WebClient' 1 16 nil!
+'From Cuis 5.0 [latest update: #4365] on 31 August 2020 at 2:58:22 pm'!
+'Description api changed'!
+!provides: 'ChuckNorrisTalk' 1 16!
+!requires: 'WebClient' 1 19 nil!
+!requires: 'Graphics-Files-Additional' 1 23 nil!
 SystemOrganization addCategory: #ChuckNorrisTalk!
 
 
@@ -18,7 +18,7 @@ ChuckNorrisMorph class
 
 !classDefinition: #ChuckNorrisFact category: #ChuckNorrisTalk!
 Object subclass: #ChuckNorrisFact
-	instanceVariableNames: 'id url value category iconUrl'
+	instanceVariableNames: 'id url value categories iconUrl'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ChuckNorrisTalk'!
@@ -46,15 +46,7 @@ I am a Chuck Norris joke (ok, fact)!
 !ChuckNorrisIoClient commentStamp: '<historical>' prior: 0!
 I am a client for chucknorris.io,  a free JSON API for hand curated Chuck Norris facts. https://api.chucknorris.io/!
 
-!ChuckNorrisFact methodsFor: 'accessing' stamp: 'TSL 3/3/2019 14:22:48'!
-category
-	^ category! !
-
-!ChuckNorrisFact methodsFor: 'accessing' stamp: 'TSL 3/3/2019 14:22:55'!
-category: aString
-	category := aString! !
-
-!ChuckNorrisMorph methodsFor: 'initialization' stamp: 'TSL 3/24/2019 11:15:54'!
+!ChuckNorrisMorph methodsFor: 'initialization' stamp: 'tsl 8/31/2020 14:51:45'!
 initialize
 	super initialize.
 	self color: Color blue.
@@ -66,7 +58,7 @@ initialize
 	factTextMorph := TextModelMorph withText: self fact value.
 	
 	self addMorph: imageMorph;
-		addMorph: factTextMorph layoutSpec: (LayoutSpec proportionalWidth: 0.7 proportionalHeight: 0.5);
+		addMorph: factTextMorph layoutSpec: (LayoutSpec proportionalWidth: 0.7 proportionalHeight: 0.7);
 		addMorph: (PluggableButtonMorph model: [ self nextRandomFact ] action: #value label: 'Next').
 
 	! !
@@ -96,7 +88,7 @@ drawOn: aCanvas
 	factTextMorph model:  (TextModel withText: self fact value).
 ! !
 
-!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'TSL 3/24/2019 11:43:11'!
+!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 8/31/2020 14:50:15'!
 open
 	| area window |
 	window := SystemWindow new.
@@ -109,9 +101,17 @@ open
 	
 	window openInWorld.
 	window widgetsColor: Color blue.
-	window morphPosition: 1@1 extent:350@300.
+	window morphPosition: 1@1 extent:360@320.
 
 ! !
+
+!ChuckNorrisFact methodsFor: 'accessing' stamp: 'tsl 8/31/2020 14:48:54'!
+categories
+	^ categories! !
+
+!ChuckNorrisFact methodsFor: 'accessing' stamp: 'tsl 8/31/2020 14:49:16'!
+categories: anArray
+	categories := anArray! !
 
 !ChuckNorrisFact methodsFor: 'accessing' stamp: 'TSL 3/3/2019 14:22:27'!
 iconUrl
@@ -145,12 +145,12 @@ value
 value: aString
 	value := aString! !
 
-!ChuckNorrisFact class methodsFor: 'as yet unclassified' stamp: 'TSL 3/3/2019 15:40:01'!
+!ChuckNorrisFact class methodsFor: 'as yet unclassified' stamp: 'tsl 8/31/2020 14:49:30'!
 newFromJson: aJsonDictionary
 	^ self new
 		id: (aJsonDictionary at: #id);
 		url: (aJsonDictionary at: #url); 
-		category: (aJsonDictionary at: #category); 
+		categories: (aJsonDictionary at: #categories); 
 		iconUrl: (aJsonDictionary at: #icon_url);
 		value:  (aJsonDictionary at: #value);  
 		yourself ! !
