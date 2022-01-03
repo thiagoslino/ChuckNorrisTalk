@@ -1,44 +1,48 @@
-'From Cuis 5.0 [latest update: #4365] on 31 August 2020 at 3:25:39 pm'!
+'From Cuis 6.0 [latest update: #5031] on 3 January 2022 at 7:26:17 am'!
 'Description print fact'!
-!provides: 'ChuckNorrisTalk' 1 17!
+!provides: 'ChuckNorrisTalk' 1 19!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
-SystemOrganization addCategory: #ChuckNorrisTalk!
+SystemOrganization addCategory: 'ChuckNorrisTalk'!
 
 
-!classDefinition: #ChuckNorrisMorph category: #ChuckNorrisTalk!
+!classDefinition: #ChuckNorrisMorph category: 'ChuckNorrisTalk'!
 LayoutMorph subclass: #ChuckNorrisMorph
 	instanceVariableNames: 'client fact chuckNorrisImage imageMorph factTextMorph'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ChuckNorrisTalk'!
-!classDefinition: 'ChuckNorrisMorph class' category: #ChuckNorrisTalk!
+!classDefinition: 'ChuckNorrisMorph class' category: 'ChuckNorrisTalk'!
 ChuckNorrisMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #ChuckNorrisFact category: #ChuckNorrisTalk!
+!classDefinition: #ChuckNorrisFact category: 'ChuckNorrisTalk'!
 Object subclass: #ChuckNorrisFact
 	instanceVariableNames: 'id url value categories iconUrl'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ChuckNorrisTalk'!
-!classDefinition: 'ChuckNorrisFact class' category: #ChuckNorrisTalk!
+!classDefinition: 'ChuckNorrisFact class' category: 'ChuckNorrisTalk'!
 ChuckNorrisFact class
 	instanceVariableNames: ''!
 
-!classDefinition: #ChuckNorrisIoClient category: #ChuckNorrisTalk!
+!classDefinition: #ChuckNorrisIoClient category: 'ChuckNorrisTalk'!
 Object subclass: #ChuckNorrisIoClient
 	instanceVariableNames: 'queryStream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ChuckNorrisTalk'!
-!classDefinition: 'ChuckNorrisIoClient class' category: #ChuckNorrisTalk!
+!classDefinition: 'ChuckNorrisIoClient class' category: 'ChuckNorrisTalk'!
 ChuckNorrisIoClient class
 	instanceVariableNames: ''!
 
 
-!ChuckNorrisMorph commentStamp: '<historical>' prior: 0!
-A morph to show random facts.!
+!ChuckNorrisMorph commentStamp: 'tsl 1/3/2022 07:20:57' prior: 0!
+A morph to show random facts.
+
+Execute:
+ChuckNorrisMorph open.
+!
 
 !ChuckNorrisFact commentStamp: '<historical>' prior: 0!
 I am a Chuck Norris joke (ok, fact)!
@@ -53,7 +57,7 @@ printOn: aStream
 		nextPutAll: self value;
 		nextPut: $)! !
 
-!ChuckNorrisMorph methodsFor: 'initialization' stamp: 'tsl 8/31/2020 14:51:45'!
+!ChuckNorrisMorph methodsFor: 'initialization' stamp: 'tsl 1/3/2022 07:19:41'!
 initialize
 	super initialize.
 	self color: Color blue.
@@ -65,7 +69,7 @@ initialize
 	factTextMorph := TextModelMorph withText: self fact value.
 	
 	self addMorph: imageMorph;
-		addMorph: factTextMorph layoutSpec: (LayoutSpec proportionalWidth: 0.7 proportionalHeight: 0.7);
+		addMorph: factTextMorph layoutSpec: (LayoutSpec proportionalWidth: 0.8 proportionalHeight: 0.9);
 		addMorph: (PluggableButtonMorph model: [ self nextRandomFact ] action: #value label: 'Next').
 
 	! !
@@ -95,7 +99,7 @@ drawOn: aCanvas
 	factTextMorph model:  (TextModel withText: self fact value).
 ! !
 
-!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 8/31/2020 14:50:15'!
+!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 1/3/2022 07:24:19'!
 open
 	| area window |
 	window := SystemWindow new.
@@ -108,7 +112,7 @@ open
 	
 	window openInWorld.
 	window widgetsColor: Color blue.
-	window morphPosition: 1@1 extent:360@320.
+	window morphPosition: 1@1 extent:420@360.
 
 ! !
 
