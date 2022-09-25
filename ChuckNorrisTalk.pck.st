@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5031] on 3 January 2022 at 7:26:17 am'!
-'Description print fact'!
-!provides: 'ChuckNorrisTalk' 1 19!
+'From Cuis 6.0 [latest update: #5492] on 25 September 2022 at 12:26:53 pm'!
+'Description fix image url'!
+!provides: 'ChuckNorrisTalk' 1 21!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
 SystemOrganization addCategory: 'ChuckNorrisTalk'!
@@ -50,13 +50,6 @@ I am a Chuck Norris joke (ok, fact)!
 !ChuckNorrisIoClient commentStamp: '<historical>' prior: 0!
 I am a client for chucknorris.io,  a free JSON API for hand curated Chuck Norris facts. https://api.chucknorris.io/!
 
-!ChuckNorrisFact methodsFor: 'printing' stamp: 'tsl 8/31/2020 15:23:38'!
-printOn: aStream
-	super printOn: aStream.
-	aStream nextPut: $(;
-		nextPutAll: self value;
-		nextPut: $)! !
-
 !ChuckNorrisMorph methodsFor: 'initialization' stamp: 'tsl 1/3/2022 07:19:41'!
 initialize
 	super initialize.
@@ -74,10 +67,10 @@ initialize
 
 	! !
 
-!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'TSL 3/6/2019 11:27:36'!
+!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'tsl 9/25/2022 12:24:13'!
 chuckNorrisImage
 	chuckNorrisImage isNil ifTrue: [ 
-		chuckNorrisImage := (WebClient httpGet: 'https://assets.chucknorris.host/img/avatar/chuck-norris.png') content ].
+		chuckNorrisImage := (WebClient httpGet: 'https://api.chucknorris.io/img/chucknorris_logo_coloured_small.png') content ].
 	^ chuckNorrisImage! !
 
 !ChuckNorrisMorph methodsFor: 'accessing' stamp: 'TSL 3/5/2019 16:22:05'!
@@ -99,7 +92,7 @@ drawOn: aCanvas
 	factTextMorph model:  (TextModel withText: self fact value).
 ! !
 
-!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 1/3/2022 07:24:19'!
+!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 9/25/2022 12:26:07'!
 open
 	| area window |
 	window := SystemWindow new.
@@ -112,9 +105,16 @@ open
 	
 	window openInWorld.
 	window widgetsColor: Color blue.
-	window morphPosition: 1@1 extent:420@360.
+	window morphPosition: 1@1 extent:550@480.
 
 ! !
+
+!ChuckNorrisFact methodsFor: 'printing' stamp: 'tsl 8/31/2020 15:23:38'!
+printOn: aStream
+	super printOn: aStream.
+	aStream nextPut: $(;
+		nextPutAll: self value;
+		nextPut: $)! !
 
 !ChuckNorrisFact methodsFor: 'accessing' stamp: 'tsl 8/31/2020 14:48:54'!
 categories
