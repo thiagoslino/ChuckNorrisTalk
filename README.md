@@ -32,3 +32,5 @@ There is a simple morph to show random facts. Execute:
 ```Smalltalk
 ChuckNorrisMorph  open 
 ```
+
+![alt text](https://github.com/thiagoslino/ChuckNorrisTalk/blob/master/screen.png "Chip-8 for Cuis")
