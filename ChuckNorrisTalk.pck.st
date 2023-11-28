@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #6092] on 28 November 2023 at 2:03:23 pm'!
+'From Cuis 6.0 [latest update: #6090] on 28 November 2023 at 3:37:40 pm'!
 'Description menu entry and icon'!
-!provides: 'ChuckNorrisTalk' 1 23!
+!provides: 'ChuckNorrisTalk' 1 24!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
 SystemOrganization addCategory: #ChuckNorrisTalk!
@@ -113,16 +113,16 @@ open
 
 ! !
 
-!ChuckNorrisMorph class methodsFor: 'menu-world' stamp: 'tsl 11/28/2023 12:23:40'!
+!ChuckNorrisMorph class methodsFor: 'menu-world' stamp: 'tsl 11/28/2023 15:37:25'!
 worldMenuOptions
 	| arr |
 	arr := `{{
 			#itemGroup 		-> 		10.
 			#itemOrder 		-> 		50.
-			#label 			->			'Tell more about Chuck Norris'.
+			#label 			->			'Tell me more about Chuck Norris'.
 			#object 			-> 		ChuckNorrisMorph .
 			#selector 		-> 		#open.
-			#balloonText 	-> 		'Tell more about Chuck Norris'.
+			#balloonText 	-> 		'Tell me more about Chuck Norris'.
 		} asDictionary}`.
 	(arr at: 1) at: #icon put: self chuckNorrisIcon.
 	^ arr! !
