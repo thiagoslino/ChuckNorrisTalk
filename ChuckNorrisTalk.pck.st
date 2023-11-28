@@ -1,38 +1,38 @@
-'From Cuis 6.0 [latest update: #5492] on 25 September 2022 at 12:26:53 pm'!
-'Description fix image url'!
-!provides: 'ChuckNorrisTalk' 1 21!
+'From Cuis 6.0 [latest update: #6092] on 28 November 2023 at 2:03:23 pm'!
+'Description menu entry and icon'!
+!provides: 'ChuckNorrisTalk' 1 23!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
-SystemOrganization addCategory: 'ChuckNorrisTalk'!
+SystemOrganization addCategory: #ChuckNorrisTalk!
 
 
-!classDefinition: #ChuckNorrisMorph category: 'ChuckNorrisTalk'!
+!classDefinition: #ChuckNorrisMorph category: #ChuckNorrisTalk!
 LayoutMorph subclass: #ChuckNorrisMorph
 	instanceVariableNames: 'client fact chuckNorrisImage imageMorph factTextMorph'
-	classVariableNames: ''
+	classVariableNames: 'ChuckNorrisIcon'
 	poolDictionaries: ''
 	category: 'ChuckNorrisTalk'!
-!classDefinition: 'ChuckNorrisMorph class' category: 'ChuckNorrisTalk'!
+!classDefinition: 'ChuckNorrisMorph class' category: #ChuckNorrisTalk!
 ChuckNorrisMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #ChuckNorrisFact category: 'ChuckNorrisTalk'!
+!classDefinition: #ChuckNorrisFact category: #ChuckNorrisTalk!
 Object subclass: #ChuckNorrisFact
 	instanceVariableNames: 'id url value categories iconUrl'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ChuckNorrisTalk'!
-!classDefinition: 'ChuckNorrisFact class' category: 'ChuckNorrisTalk'!
+!classDefinition: 'ChuckNorrisFact class' category: #ChuckNorrisTalk!
 ChuckNorrisFact class
 	instanceVariableNames: ''!
 
-!classDefinition: #ChuckNorrisIoClient category: 'ChuckNorrisTalk'!
+!classDefinition: #ChuckNorrisIoClient category: #ChuckNorrisTalk!
 Object subclass: #ChuckNorrisIoClient
 	instanceVariableNames: 'queryStream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ChuckNorrisTalk'!
-!classDefinition: 'ChuckNorrisIoClient class' category: 'ChuckNorrisTalk'!
+!classDefinition: 'ChuckNorrisIoClient class' category: #ChuckNorrisTalk!
 ChuckNorrisIoClient class
 	instanceVariableNames: ''!
 
@@ -92,6 +92,10 @@ drawOn: aCanvas
 	factTextMorph model:  (TextModel withText: self fact value).
 ! !
 
+!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 11/28/2023 13:55:41'!
+chuckNorrisIcon
+	^ ChuckNorrisIcon ! !
+
 !ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 9/25/2022 12:26:07'!
 open
 	| area window |
@@ -107,6 +111,32 @@ open
 	window widgetsColor: Color blue.
 	window morphPosition: 1@1 extent:550@480.
 
+! !
+
+!ChuckNorrisMorph class methodsFor: 'menu-world' stamp: 'tsl 11/28/2023 12:23:40'!
+worldMenuOptions
+	| arr |
+	arr := `{{
+			#itemGroup 		-> 		10.
+			#itemOrder 		-> 		50.
+			#label 			->			'Tell more about Chuck Norris'.
+			#object 			-> 		ChuckNorrisMorph .
+			#selector 		-> 		#open.
+			#balloonText 	-> 		'Tell more about Chuck Norris'.
+		} asDictionary}`.
+	(arr at: 1) at: #icon put: self chuckNorrisIcon.
+	^ arr! !
+
+!ChuckNorrisMorph class methodsFor: 'new-morph participation' stamp: 'tsl 11/28/2023 13:45:33'!
+includeInNewMorphMenu
+	"Return true for all classes that can be instantiated from the menu"
+	^ false! !
+
+!ChuckNorrisMorph class methodsFor: 'class initialization' stamp: 'tsl 11/28/2023 14:01:37'!
+initialize
+	| dirName |
+	dirName :=  (self package) fullFileName upToLastPathSeparator.
+	ChuckNorrisIcon := ImageReadWriter formFromFileNamed: dirName , '/', 'chuckicon.png'.
 ! !
 
 !ChuckNorrisFact methodsFor: 'printing' stamp: 'tsl 8/31/2020 15:23:38'!
@@ -231,3 +261,4 @@ initialize
 initializeQueryStream
 	queryStream := (ReadWriteStream on: String new).
 	queryStream nextPutAll: self baseUrl.! !
+ChuckNorrisMorph initialize!
