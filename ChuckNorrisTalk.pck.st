@@ -1,20 +1,10 @@
-'From Cuis 6.0 [latest update: #6090] on 28 November 2023 at 3:37:40 pm'!
+'From Cuis7.1 [latest update: #6664] on 1 September 2024 at 10:38:13 am'!
 'Description menu entry and icon'!
-!provides: 'ChuckNorrisTalk' 1 24!
+!provides: 'ChuckNorrisTalk' 1 25!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
 SystemOrganization addCategory: #ChuckNorrisTalk!
 
-
-!classDefinition: #ChuckNorrisMorph category: #ChuckNorrisTalk!
-LayoutMorph subclass: #ChuckNorrisMorph
-	instanceVariableNames: 'client fact chuckNorrisImage imageMorph factTextMorph'
-	classVariableNames: 'ChuckNorrisIcon'
-	poolDictionaries: ''
-	category: 'ChuckNorrisTalk'!
-!classDefinition: 'ChuckNorrisMorph class' category: #ChuckNorrisTalk!
-ChuckNorrisMorph class
-	instanceVariableNames: ''!
 
 !classDefinition: #ChuckNorrisFact category: #ChuckNorrisTalk!
 Object subclass: #ChuckNorrisFact
@@ -36,13 +26,16 @@ Object subclass: #ChuckNorrisIoClient
 ChuckNorrisIoClient class
 	instanceVariableNames: ''!
 
+!classDefinition: #ChuckNorrisMorph category: #ChuckNorrisTalk!
+LayoutMorph subclass: #ChuckNorrisMorph
+	instanceVariableNames: 'client fact chuckNorrisImage imageMorph factTextMorph'
+	classVariableNames: 'ChuckNorrisIcon'
+	poolDictionaries: ''
+	category: 'ChuckNorrisTalk'!
+!classDefinition: 'ChuckNorrisMorph class' category: #ChuckNorrisTalk!
+ChuckNorrisMorph class
+	instanceVariableNames: ''!
 
-!ChuckNorrisMorph commentStamp: 'tsl 1/3/2022 07:20:57' prior: 0!
-A morph to show random facts.
-
-Execute:
-ChuckNorrisMorph open.
-!
 
 !ChuckNorrisFact commentStamp: '<historical>' prior: 0!
 I am a Chuck Norris joke (ok, fact)!
@@ -50,94 +43,12 @@ I am a Chuck Norris joke (ok, fact)!
 !ChuckNorrisIoClient commentStamp: '<historical>' prior: 0!
 I am a client for chucknorris.io,  a free JSON API for hand curated Chuck Norris facts. https://api.chucknorris.io/!
 
-!ChuckNorrisMorph methodsFor: 'initialization' stamp: 'tsl 1/3/2022 07:19:41'!
-initialize
-	super initialize.
-	self color: Color blue.
-	
-	client := ChuckNorrisIoClient new.
-	fact := client random.
-	
-	imageMorph := ImageMorph new image: (Form fromBinaryStream: self chuckNorrisImage  asByteArray readStream).
-	factTextMorph := TextModelMorph withText: self fact value.
-	
-	self addMorph: imageMorph;
-		addMorph: factTextMorph layoutSpec: (LayoutSpec proportionalWidth: 0.8 proportionalHeight: 0.9);
-		addMorph: (PluggableButtonMorph model: [ self nextRandomFact ] action: #value label: 'Next').
+!ChuckNorrisMorph commentStamp: 'tsl 1/3/2022 07:20:57' prior: 0!
+A morph to show random facts.
 
-	! !
-
-!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'tsl 9/25/2022 12:24:13'!
-chuckNorrisImage
-	chuckNorrisImage isNil ifTrue: [ 
-		chuckNorrisImage := (WebClient httpGet: 'https://api.chucknorris.io/img/chucknorris_logo_coloured_small.png') content ].
-	^ chuckNorrisImage! !
-
-!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'TSL 3/5/2019 16:22:05'!
-client
-	^ client ! !
-
-!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'TSL 3/5/2019 17:49:47'!
-fact
-	^ fact ! !
-
-!ChuckNorrisMorph methodsFor: 'as yet unclassified' stamp: 'TSL 3/5/2019 18:01:47'!
-nextRandomFact
-	fact := self client random.
-	self redrawNeeded.! !
-
-!ChuckNorrisMorph methodsFor: 'drawing' stamp: 'TSL 3/24/2019 11:21:11'!
-drawOn: aCanvas
-	super drawOn: aCanvas .
-	factTextMorph model:  (TextModel withText: self fact value).
-! !
-
-!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 11/28/2023 13:55:41'!
-chuckNorrisIcon
-	^ ChuckNorrisIcon ! !
-
-!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 9/25/2022 12:26:07'!
-open
-	| area window |
-	window := SystemWindow new.
-	window setLabel: 'Chuck Norris Fact'.
-	
-	area := (self newColumn separation: 5) name: #AREA.
-	area color: Color red.
-
-	window addMorph: area .
-	
-	window openInWorld.
-	window widgetsColor: Color blue.
-	window morphPosition: 1@1 extent:550@480.
-
-! !
-
-!ChuckNorrisMorph class methodsFor: 'menu-world' stamp: 'tsl 11/28/2023 15:37:25'!
-worldMenuOptions
-	| arr |
-	arr := `{{
-			#itemGroup 		-> 		10.
-			#itemOrder 		-> 		50.
-			#label 			->			'Tell me more about Chuck Norris'.
-			#object 			-> 		ChuckNorrisMorph .
-			#selector 		-> 		#open.
-			#balloonText 	-> 		'Tell me more about Chuck Norris'.
-		} asDictionary}`.
-	(arr at: 1) at: #icon put: self chuckNorrisIcon.
-	^ arr! !
-
-!ChuckNorrisMorph class methodsFor: 'new-morph participation' stamp: 'tsl 11/28/2023 13:45:33'!
-includeInNewMorphMenu
-	"Return true for all classes that can be instantiated from the menu"
-	^ false! !
-
-!ChuckNorrisMorph class methodsFor: 'class initialization' stamp: 'tsl 11/28/2023 14:01:37'!
-initialize
-	| dirName |
-	dirName :=  (self package) fullFileName upToLastPathSeparator.
-	ChuckNorrisIcon := ImageReadWriter formFromFileNamed: dirName , '/', 'chuckicon.png'.
-! !
+Execute:
+ChuckNorrisMorph open.
+!
 
 !ChuckNorrisFact methodsFor: 'printing' stamp: 'tsl 8/31/2020 15:23:38'!
 printOn: aStream
@@ -208,6 +119,10 @@ categories
 		
 	^ self retrieveContents! !
 
+!ChuckNorrisIoClient methodsFor: 'accessing' stamp: 'tsl 9/1/2024 10:36:18'!
+chuckNorrisImage
+	 ^ (WebClient httpGet: 'https://api.chucknorris.io/img/chucknorris_logo_coloured_small.png') content! !
+
 !ChuckNorrisIoClient methodsFor: 'accessing' stamp: 'TSL 3/2/2019 10:42:58'!
 queryStream
 	^ queryStream! !
@@ -261,4 +176,92 @@ initialize
 initializeQueryStream
 	queryStream := (ReadWriteStream on: String new).
 	queryStream nextPutAll: self baseUrl.! !
+
+!ChuckNorrisMorph methodsFor: 'initialization' stamp: 'tsl 1/3/2022 07:19:41'!
+initialize
+	super initialize.
+	self color: Color blue.
+	
+	client := ChuckNorrisIoClient new.
+	fact := client random.
+	
+	imageMorph := ImageMorph new image: (Form fromBinaryStream: self chuckNorrisImage  asByteArray readStream).
+	factTextMorph := TextModelMorph withText: self fact value.
+	
+	self addMorph: imageMorph;
+		addMorph: factTextMorph layoutSpec: (LayoutSpec proportionalWidth: 0.8 proportionalHeight: 0.9);
+		addMorph: (PluggableButtonMorph model: [ self nextRandomFact ] action: #value label: 'Next').
+
+	! !
+
+!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'tsl 9/1/2024 10:37:04'!
+chuckNorrisImage
+	chuckNorrisImage isNil ifTrue: [ 
+		chuckNorrisImage := client chuckNorrisImage ].
+	^ chuckNorrisImage! !
+
+!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'TSL 3/5/2019 16:22:05'!
+client
+	^ client ! !
+
+!ChuckNorrisMorph methodsFor: 'accessing' stamp: 'TSL 3/5/2019 17:49:47'!
+fact
+	^ fact ! !
+
+!ChuckNorrisMorph methodsFor: 'as yet unclassified' stamp: 'TSL 3/5/2019 18:01:47'!
+nextRandomFact
+	fact := self client random.
+	self redrawNeeded.! !
+
+!ChuckNorrisMorph methodsFor: 'drawing' stamp: 'TSL 3/24/2019 11:21:11'!
+drawOn: aCanvas
+	super drawOn: aCanvas .
+	factTextMorph model:  (TextModel withText: self fact value).
+! !
+
+!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 11/28/2023 13:55:41'!
+chuckNorrisIcon
+	^ ChuckNorrisIcon ! !
+
+!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 9/1/2024 10:33:23'!
+open
+	| area window |
+	window := SystemWindow new.
+	window setLabel: 'Chuck Norris Fact'.
+	
+	area := (self newColumn separation: 5) name: #AREA.
+
+	window addMorph: area .
+	
+	window openInWorld.
+	window widgetsColor: Color blue.
+	window morphPosition: 1@1 extent:550@480.
+
+! !
+
+!ChuckNorrisMorph class methodsFor: 'menu-world' stamp: 'tsl 11/28/2023 15:37:25'!
+worldMenuOptions
+	| arr |
+	arr := `{{
+			#itemGroup 		-> 		10.
+			#itemOrder 		-> 		50.
+			#label 			->			'Tell me more about Chuck Norris'.
+			#object 			-> 		ChuckNorrisMorph .
+			#selector 		-> 		#open.
+			#balloonText 	-> 		'Tell me more about Chuck Norris'.
+		} asDictionary}`.
+	(arr at: 1) at: #icon put: self chuckNorrisIcon.
+	^ arr! !
+
+!ChuckNorrisMorph class methodsFor: 'new-morph participation' stamp: 'tsl 11/28/2023 13:45:33'!
+includeInNewMorphMenu
+	"Return true for all classes that can be instantiated from the menu"
+	^ false! !
+
+!ChuckNorrisMorph class methodsFor: 'class initialization' stamp: 'tsl 11/28/2023 14:01:37'!
+initialize
+	| dirName |
+	dirName :=  (self package) fullFileName upToLastPathSeparator.
+	ChuckNorrisIcon := ImageReadWriter formFromFileNamed: dirName , '/', 'chuckicon.png'.
+! !
 ChuckNorrisMorph initialize!
