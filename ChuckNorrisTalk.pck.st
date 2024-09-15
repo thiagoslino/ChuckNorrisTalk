@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6664] on 1 September 2024 at 10:38:13 am'!
+'From Cuis7.1 [latest update: #6722] on 15 September 2024 at 6:07:43 pm'!
 'Description menu entry and icon'!
-!provides: 'ChuckNorrisTalk' 1 25!
+!provides: 'ChuckNorrisTalk' 1 26!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
 SystemOrganization addCategory: #ChuckNorrisTalk!
@@ -223,7 +223,7 @@ drawOn: aCanvas
 chuckNorrisIcon
 	^ ChuckNorrisIcon ! !
 
-!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 9/1/2024 10:33:23'!
+!ChuckNorrisMorph class methodsFor: 'accessing' stamp: 'tsl 9/15/2024 18:06:50'!
 open
 	| area window |
 	window := SystemWindow new.
@@ -235,7 +235,8 @@ open
 	
 	window openInWorld.
 	window widgetsColor: Color blue.
-	window morphPosition: 1@1 extent:550@480.
+	window morphPosition: 1@1;
+		morphExtent: 550@480.
 
 ! !
 
