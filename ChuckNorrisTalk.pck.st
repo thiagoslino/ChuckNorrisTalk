@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6722] on 15 September 2024 at 6:07:43 pm'!
-'Description menu entry and icon'!
-!provides: 'ChuckNorrisTalk' 1 26!
+'From Cuis7.5 [latest update: #7383] on 26 July 2025 at 10:06:36 am'!
+'Description new LayoutMorph hierarchy '!
+!provides: 'ChuckNorrisTalk' 1 27!
 !requires: 'WebClient' 1 19 nil!
 !requires: 'Graphics-Files-Additional' 1 23 nil!
 SystemOrganization addCategory: #ChuckNorrisTalk!
@@ -27,7 +27,7 @@ ChuckNorrisIoClient class
 	instanceVariableNames: ''!
 
 !classDefinition: #ChuckNorrisMorph category: #ChuckNorrisTalk!
-LayoutMorph subclass: #ChuckNorrisMorph
+LinearLayoutMorph subclass: #ChuckNorrisMorph
 	instanceVariableNames: 'client fact chuckNorrisImage imageMorph factTextMorph'
 	classVariableNames: 'ChuckNorrisIcon'
 	poolDictionaries: ''
