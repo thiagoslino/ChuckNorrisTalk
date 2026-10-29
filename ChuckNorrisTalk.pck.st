@@ -1,8 +1,8 @@
 'From Cuis7.9 [latest update: #8056] on 9 July 2026 at 10:48:40 am'!
 'Description new LayoutMorph hierarchy '!
-!provides: 'ChuckNorrisTalk' 1 28!
-!requires: 'WebClient' 1 19 nil!
-!requires: 'Graphics-Files-Additional' 1 23 nil!
+!provides: 'ChuckNorrisTalk' '1.28.0'!
+!requires: 'WebClient' '1.19.0' '1.*.*'!
+!requires: 'Graphics-Files-Additional' '1.23.0' '1.*.*'!
 SystemOrganization addCategory: #ChuckNorrisTalk!
 
 
